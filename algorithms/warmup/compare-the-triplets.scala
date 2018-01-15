@@ -10,8 +10,8 @@ object Solution {
             else if (pair._1 < pair._2) 2
             else 0
         }
-        val alicePoints = csojj.groupBy(identity).mapValues(_.size)(1)
-        val bobPoints = csojj.groupBy(identity).mapValues(_.size)(2)
+        val alicePoints = csojj.groupBy(identity).mapValues(_.size).lift(1).getOrElse(0)
+        val bobPoints = csojj.groupBy(identity).mapValues(_.size).lift(2).getOrElse(0)
         print(s"$alicePoints $bobPoints")
     }
 }
