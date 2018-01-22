@@ -1,8 +1,10 @@
 object Solution {
 
     def miniMaxSum(arr: Array[Int]): Unit =  {
-        val min = arr.toList.combinations(4).map(_.sum).reduceLeft(_ min _)
-        val max = arr.toList.combinations(4).map(_.sum).reduceLeft(_ max _)
+        val arrL: List[Long] = arr.toList.map(_.toLong)
+        val min = arrL.combinations(4).map(_.sum).reduceLeft(_ min _)
+        val max = arrL.combinations(4).map(_.sum).reduceLeft(_ max _)
+
         print(min)
         print(" ")
         print(max)
