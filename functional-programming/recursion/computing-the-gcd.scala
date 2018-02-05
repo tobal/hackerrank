@@ -1,7 +1,7 @@
 object Solution {
     
     def gcd(x: Int, y: Int): Int = {
-        if (x > y) y else if (y == 0) x else gcd(x, y % x)
+        if (x == 0) y else gcd(y % x, x)
     }
   
     def acceptInputAndComputeGCD(pair:List[Int]) = {
