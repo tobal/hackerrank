@@ -7,30 +7,24 @@ object Solution {
   //val height = 4
 
   def triangle(r: Int, c: Int, w: Int, rowOffset: Int, columnOffset: Int): Boolean = {
-    c < (w / 2 + columnOffset) + r + 1 + rowOffset && c > (w / 2 + columnOffset) - r + 1 + rowOffset
+    c < (w / 2 + columnOffset) + r + 1 - rowOffset && c > (w / 2 + columnOffset) - r + 1 + rowOffset
   }
 
-  def inTriangle(row: Int, column: Int): Boolean = {
-    if (triangle(row, column, width, 0, 0)) {
-        if (row > height / 2) {
-          val columnOffset = width / 2
-          val rowOffset = height / 2
-          if (
-              triangle(row, column, width / 2, -rowOffset, 0)
-              ||
-              triangle(row, column, width / 2, rowOffset + 1, columnOffset)
-            ) true
-          else false
-        }
-        else true
+  def inTriangle(row: Int, column: Int, iterations: Int): Boolean = {
+    def recSier(width: Int, height: Int, rowOffset: Int, columnOffset: Int): Boolean = {
+      if (row > height / 2) {
+        (triangle(row, column, width / 2, rowOffset + height / 2, 0) ||
+         triangle(row, column, width / 2, rowOffset + height / 2, columnOffset + 1 + width / 2))
       }
-    else false
+      else triangle(row, column, width, rowOffset, columnOffset)
+    }
+    recSier(width, height, 0, 0)
   }
 
   def drawTriangles(n: Int) {
     for ( row <- 1 to height ) yield {
       for ( column <- 1 to width ) yield {
-        if(inTriangle(row, column)) print("1")
+        if(inTriangle(row, column, 1)) print("1")
         else print("_")
       }
       println("")
