@@ -6,15 +6,20 @@ object Solution {
   //val width = 7
   //val height = 4
 
+  def triangle(r: Int, c: Int, w: Int, rowOffset: Int, columnOffset: Int): Boolean = {
+    c < (w / 2 + columnOffset) + r + 1 + rowOffset && c > (w / 2 + columnOffset) - r + 1 + rowOffset
+  }
+
   def inTriangle(row: Int, column: Int): Boolean = {
-    if(column < width / 2 + row + 1 &&
-      column > width / 2 - row + 1) {
+    if (triangle(row, column, width, 0, 0)) {
         if (row > height / 2) {
-          if (column < width / 4 + row + 1 - height / 2 &&
-              column > width / 4 - row + 1 - height / 2
+          val columnOffset = width / 2
+          val rowOffset = height / 2
+          if (
+              triangle(row, column, width / 2, -rowOffset, 0)
               ||
-              column < (width / 4 + width / 2) + row + 2 + height / 2 &&
-              column > (width / 4 + width / 2) - row + 2 + height / 2) true
+              triangle(row, column, width / 2, rowOffset + 1, columnOffset)
+            ) true
           else false
         }
         else true
