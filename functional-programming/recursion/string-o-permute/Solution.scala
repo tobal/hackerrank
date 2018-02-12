@@ -1,3 +1,5 @@
+#!/usr/bin/env scala
+
 object Solution {
     def switchChars(input: List[Char], output: List[Char]): List[Char] = input match {
         case x1 :: x2 :: xs => switchChars(xs, output ::: List(x2, x1))
