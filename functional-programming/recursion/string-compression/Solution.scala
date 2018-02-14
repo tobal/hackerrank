@@ -1,19 +1,17 @@
+#!/usr/bin/env scala
+
 object Solution {
-    def asChar(num: Int): Char = (num + '0').toChar
+    def asChar(num: Int): List[Char] = num.toString.toList
     
     def compress(s: String): String = {
         def rec(input: List[Char], acc: List[Char], prev: Char, occurrances: Int): List[Char] = input match {
             case x :: xs => {
                 if (x == prev) rec(xs, acc, x, occurrances + 1)
-                else if (occurrances > 1) rec(xs, x :: asChar(occurrances) :: acc, x, 1)
+                else if (occurrances > 1) rec(xs, x :: asChar(occurrances).reverse ::: acc, x, 1)
                 else rec(xs, x :: acc, x, 1)
             }
-            case x :: Nil => {
-                if (occurrances > 1) asChar(occurrances) :: acc
-                else x :: acc
-            }
             case Nil => {
-                if (occurrances > 1) asChar(occurrances) :: acc
+                if (occurrances > 1) asChar(occurrances).reverse ::: acc
                 else acc
             }
         }
