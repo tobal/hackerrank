@@ -12,8 +12,8 @@ object Solution {
     }
     
     def isFullOfColors(colors: String): Boolean = {
-        if (colorNum(colors, 'R') != colorNum(colors, 'G')) false
-        if (colorNum(colors, 'Y') != colorNum(colors, 'B')) false
+        if (colorNum(colors, 'R') != colorNum(colors, 'G')) return false
+        if (colorNum(colors, 'Y') != colorNum(colors, 'B')) return false
         checkPrefixes(colors.init)
     }
 
