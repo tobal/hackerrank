@@ -1,8 +1,9 @@
 object Solution {
     def filterByCount(input: List[Int], repetition: Int) = {
-        val r = input.map(x => (x, input.count(_ == x))).distinct.filter{ case (x, c) => c >= repetition }
-        if (r.isEmpty) println(-1)
-        else println(r.unzip._1.mkString(" "))
+        val counts = input.groupBy(identity).mapValues(_.size)
+        val result = input.map( x => (x, counts(x)) ).distinct.filter{ case (x, c) => c >= repetition }
+        if (result.isEmpty) println(-1)
+        else println(result.unzip._1.mkString(" "))
     }
 
     def main(args: Array[String]) {
