@@ -1,26 +1,15 @@
 object Solution {
-    def alternatives(sum: Int, powers: List[Int]): List[List[Int]] = {
-        if (sum == 0) List(List())
-        if (powers.isEmpty) List()
-        
-        val output = for (power <- powers) yield {
-            val rest = powers.filter(_ != power)
-            val next = sum - power
-            
-            if (next > 0) alternatives(sum, rest) ++ alternatives(next, powers.dropWhile(_ <= power)).map(power :: _)
-            else if (next < 0) alternatives(sum, rest)
-            else alternatives(sum, rest) :+ List(power)
-        }
-        output.flatMap(x => x)
+    def alternatives(sum: Int, exponent: Int, curr: Int): Int = {
+        val subtracted = sum - math.pow(curr, exponent).toInt
+        if (subtracted < 0) 0
+        else if (subtracted == 0) 1
+        else alternatives(subtracted, exponent, curr + 1) + alternatives(sum, exponent, curr + 1)
     }
 
     def main(args: Array[String]): Unit = {
         val sum = readInt
         val exponent = readInt
-        val powers = for {
-            i <- 1 to math.pow(sum, 1.0 / exponent).toInt
-        } yield { math.pow(i, exponent).toInt }
 
-        println(alternatives(sum, powers.toList).toSet.size)
-		}
+        println(alternatives(sum, exponent, 1))
+  }
 }
