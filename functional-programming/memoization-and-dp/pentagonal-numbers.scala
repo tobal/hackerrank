@@ -1,8 +1,19 @@
 object Solution {
-    def pentagonal(num: Int): Int = num match {
-        case 1 => 1
-        case 2 => 5
-        case n => 2 * num + (num - 2) + pentagonal(num - 1)
+    var cache: Map[Int, Int] = Map(1 -> 1, 2 -> 5)
+
+    def pentagonal(num: Int): Int = {
+        if (cache.get(num).isDefined) cache(num)
+        else {
+            val result = 2 * num + (num - 2) + pentagonal(num - 1)
+            cache += (num -> result)
+            result
+        }
+        /*
+        if(cache.get(num).isEmpty) {
+            cache += (num -> (2 * num + (num - 2) + pentagonal(num - 1)))
+        }
+        cache(num)
+        */
     }
 
     def main(args: Array[String]) {
