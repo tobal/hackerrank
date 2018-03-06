@@ -1,3 +1,5 @@
+#!/usr/bin/env scala
+
 object Solution {
     case class Point(x: Double, y: Double)
 
