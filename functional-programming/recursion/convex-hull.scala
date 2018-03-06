@@ -3,35 +3,42 @@ object Solution {
 
     def isCcw(ab: Point, cd: Point, ef: Point): Boolean = {
         val (a, b, c, d, e, f) = (ab.x, ab.y, cd.x, cd.y, ef.x, ef.y)
-        (f - b) * (c - a) > (d - b) * (e - a)
+        (f - b) * (c - a) >= (d - b) * (e - a)
     }
-    
+
     def ccwSorting(leftmost: Point)(p: Point, q: Point) = isCcw(leftmost, p, q)
-    
+
     def sortPoints(points: List[Point]): List[Point] = {
         val leftmost = points.minBy(_.x)
         val sorting: (Point, Point) => Boolean = ccwSorting(leftmost)
-        points.sortWith( sorting(_, _) )
-        points
+        points.sortWith(sorting(_, _))
     }
 
-    def convexHull(points: List[Point]) = {
-        val sorted = sortPoints(points)
-        //val maxX = points.maxBy(_.x)
-        //val minX = points.minBy(_.x)
-        //val full = sorted(sorted.size - 2) :: sorted(sorted.size - 1) :: sorted
-        //val angles = full.sliding(3, 1).map{ case l => angle(l(0), l(1), l(2)).toDegrees }.toList
-        //angles.filter(_ > 180.0).size > 0
-        sorted
+    def filterCcw(points: List[Point]): List[Point] = {
+        val full = points(points.size - 1) :: points ::: List(points(points.size - 2))
+        val sliding = full.sliding(3, 1).zipWithIndex.toList
+        val concave = sliding.find{ case (List(a, b, c), index) => !isCcw(a, b, c) }
+        if(concave.isDefined) {
+            val idx = sliding indexOf concave.get
+            filterCcw( (points take idx) ++ (points drop (idx + 1)) )
+        }
+        else points
     }
-    
-    def perimeter(points: List[Point]): Double = {
-        1.0
+
+    def convexHull(points: List[Point]) = filterCcw(sortPoints(points))
+
+    def lengthOf(pointA: Point, pointB: Point): Double = {
+        scala.math.sqrt(scala.math.pow(pointA.x - pointB.x, 2) + scala.math.pow(pointA.y - pointB.y, 2))
     }
-    
-    def convexHullPerimeter(points: List[Point]) = {
+
+    def foldPerimeter(acc: Double, prevPoint: Point, points: List[Point]): Double = points match {
+        case Nil => acc
+        case next :: rest => foldPerimeter(acc + lengthOf(prevPoint, next), next, rest)
+    }
+
+    def convexHullPerimeter(points: List[Point]): Double = {
         val hull = convexHull(points)
-        perimeter(hull)
+        foldPerimeter(0.0, hull.last, hull)
     }
 
     def main(args: Array[String]) {
