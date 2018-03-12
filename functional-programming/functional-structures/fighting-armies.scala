@@ -1,19 +1,21 @@
 object Solution {
     import scala.collection.mutable.Map
-    
+
     sealed trait Event
     case class FindStrongest(army: Int) extends Event
     case class StrongestDied(army: Int) extends Event
     case class Recruit(army: Int, strength: Int) extends Event
     case class Merge(army: Int, armyToMerge: Int) extends Event
-    
+
     def processEvents(events: List[Event], armiesNum: Int) = {
-        val armyStrengths: Map[Int, List[Int]] = Map((1 to armiesNum).map(x => x -> Nil): _*)
+        val armyStrengths: Map[Int, List[Int]] = Map((1 to armiesNum).map(x => x -> List[Int]().sortWith(_ < _)): _*)
         for(event <- events) yield event match {
-            case FindStrongest(army) => println(armyStrengths.maxBy(_._2))
-            case StrongestDied(army) => 
-            case Recruit(army, strength) =>
-            case Merge(army, armyToMerge) =>
+            case FindStrongest(army) => println(armyStrengths(army).max)
+            case StrongestDied(army) => {
+                armyStrengths(army) = armyStrengths(army).filterNot(_ == armyStrengths(army).max)
+            }
+            case Recruit(army, strength) => armyStrengths(army) = strength :: armyStrengths(army)
+            case Merge(army, armyToMerge) => armyStrengths(army) = armyStrengths(army) ::: armyStrengths(armyToMerge)
         }
     }
 
