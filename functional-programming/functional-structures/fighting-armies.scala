@@ -1,5 +1,5 @@
 object Solution {
-    import scala.collection.mutable.Map
+    import scala.collection.mutable.ListBuffer
 
     sealed trait Event
     case class FindStrongest(army: Int) extends Event
@@ -8,14 +8,17 @@ object Solution {
     case class Merge(army: Int, armyToMerge: Int) extends Event
 
     def processEvents(events: List[Event], armiesNum: Int) = {
-        val armyStrengths: Map[Int, List[Int]] = Map((1 to armiesNum).map(x => x -> List[Int]().sortWith(_ < _)): _*)
+        val armyStrengths: Array[ListBuffer[Int]] = Array.fill[ListBuffer[Int]](armiesNum)(ListBuffer[Int]())
         for(event <- events) yield event match {
-            case FindStrongest(army) => println(armyStrengths(army).max)
+            case FindStrongest(army) => println(armyStrengths(army - 1).toList.max)
             case StrongestDied(army) => {
-                armyStrengths(army) = armyStrengths(army).tail
+                armyStrengths(army - 1) -= armyStrengths(army - 1).toList.max
             }
-            case Recruit(army, strength) => armyStrengths(army) = strength :: armyStrengths(army)
-            case Merge(army, armyToMerge) => armyStrengths(army) = armyStrengths(army) ::: armyStrengths(armyToMerge)
+            case Recruit(army, strength) => armyStrengths(army - 1) += strength
+            case Merge(army, armyToMerge) => {
+                armyStrengths(army - 1) ++= armyStrengths(armyToMerge - 1)
+                armyStrengths(armyToMerge - 1).clear
+            }
         }
     }
 
