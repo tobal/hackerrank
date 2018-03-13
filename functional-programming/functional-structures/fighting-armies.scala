@@ -12,7 +12,7 @@ object Solution {
         for(event <- events) yield event match {
             case FindStrongest(army) => println(armyStrengths(army).max)
             case StrongestDied(army) => {
-                armyStrengths(army) = armyStrengths(army).filterNot(_ == armyStrengths(army).max)
+                armyStrengths(army) = armyStrengths(army).tail
             }
             case Recruit(army, strength) => armyStrengths(army) = strength :: armyStrengths(army)
             case Merge(army, armyToMerge) => armyStrengths(army) = armyStrengths(army) ::: armyStrengths(armyToMerge)
