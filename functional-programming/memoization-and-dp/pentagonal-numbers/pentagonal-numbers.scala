@@ -1,20 +1,9 @@
 object Solution {
-    var cache: Map[Int, Int] = Map(1 -> 1, 2 -> 5)
+    import scala.collection.mutable.Map
 
-    def pentagonal(num: Int): Int = {
-        if (cache.get(num).isDefined) cache(num)
-        else {
-            val result = 2 * num + (num - 2) + pentagonal(num - 1)
-            cache += (num -> result)
-            result
-        }
-        /*
-        if(cache.get(num).isEmpty) {
-            cache += (num -> (2 * num + (num - 2) + pentagonal(num - 1)))
-        }
-        cache(num)
-        */
-    }
+    val cache: Map[Int, Int] = Map(1 -> 1, 2 -> 5)
+
+    def pentagonal(num: Int): Int = cache.getOrElseUpdate(num, 2 * num + (num - 2) + pentagonal(num - 1))
 
     def main(args: Array[String]) {
         val cases = readInt
