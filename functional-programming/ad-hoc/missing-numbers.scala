@@ -6,6 +6,6 @@ object Solution {
         val first = readLineAsInts
         val csojj2 = readInt
         val second = readLineAsInts
-        println((second diff first).sorted.mkString(" "))
+        println((second diff first).toSet.toList.sorted.mkString(" "))
     }
 }
