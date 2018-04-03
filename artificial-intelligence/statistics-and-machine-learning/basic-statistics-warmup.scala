@@ -28,16 +28,22 @@ object Solution {
         meanStd(x, 0.0, 0.0, 0)
     }
 
+    def calcConfInterval(sampleMean: Double, sampleSize: Int, stdDeviation: Double): (Double, Double) = {
+        val errorMargin = (stdDeviation / scala.math.sqrt(sampleSize)) * 1.96
+        (sampleMean - errorMargin, sampleMean + errorMargin)
+    }
+
     def main(args: Array[String]) {
         val c = readInt
         val list = readLineAsInts
         val (mean, stdDeviation) = calcMeanStd(list.map(_.toDouble))
         val median: Double = calcMedian(list)
         val mode = calcMode(list)
-        //val confIntervalForMean =
-        println(mean)
-        println(median)
+        val confInterval = calcConfInterval(mean, list.size, stdDeviation)
+        println("%.1f".format(mean))
+        println("%.1f".format(median))
         println(mode)
         println("%.1f".format(stdDeviation))
+        println("%.1f %.1f".format(confInterval._1, confInterval._2))
     }
 }
