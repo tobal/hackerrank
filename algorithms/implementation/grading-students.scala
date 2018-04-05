@@ -10,7 +10,7 @@ object Solution {
                 val rounded = grade + (5 - (grade % 5))
                 print("round ", rounded)
                 rounded - grade match {
-                    case x if (x == 3) => grade
+                    case x if (x >= 3) => grade
                     case _ => rounded
                 }
             }
