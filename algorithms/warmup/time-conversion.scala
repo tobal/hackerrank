@@ -7,11 +7,15 @@ object Solution {
         val AM = s"${timePattern}AM".r
         val PM = s"${timePattern}PM".r
         s match {
-            case AM(hours, minutes, seconds) => s"$hours:$minutes:$seconds"
+            case AM(hours, minutes, seconds) => {
+                val adjustedHours = if (hours.toInt == 12) 0
+                                    else hours.toInt
+                f"$adjustedHours%02d:$minutes:$seconds"
+            }
             case PM(hours, minutes, seconds) => {
-                val adjustedHours = if (hours.toInt > 11) scala.math.abs(hours.toInt - 12)
+                val adjustedHours = if (hours.toInt == 12) hours.toInt
                                     else hours.toInt + 12
-                s"$adjustedHours:$minutes:$seconds"
+                f"$adjustedHours%02d:$minutes:$seconds"
             }
             case x => x
         }
