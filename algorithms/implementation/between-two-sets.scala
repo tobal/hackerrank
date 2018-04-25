@@ -4,7 +4,7 @@ object Solution {
 
     def getTotalX(a: Array[Int], b: Array[Int]): Int = {
         val max = math.max(a.toList.max, b.toList.max)
-        val bools = for(i <- 1 until max) yield
+        val bools = for(i <- 1 to max) yield
             (a.toList.filter(i % _ == 0).size == a.size) && (b.toList.filter(_ % i == 0).size == b.size)
         bools.toList.filter(_ == true).size
     }
