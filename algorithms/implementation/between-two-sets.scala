@@ -2,7 +2,12 @@ import java.io.PrintWriter
 
 object Solution {
 
-    def getTotalX(a: Array[Int], b: Array[Int]): Int = ???
+    def getTotalX(a: Array[Int], b: Array[Int]): Int = {
+        val max = math.max(a.toList.max, b.toList.max)
+        val bools = for(i <- 1 until max) yield
+            (a.toList.filter(i % _ == 0).size == a.size) && (b.toList.filter(_ % i == 0).size == b.size)
+        bools.toList.filter(_ == true).size
+    }
 
     def main(args: Array[String]) {
         val scan = scala.io.StdIn
