@@ -1,6 +1,9 @@
 object Solution {
 
-    def divisibleSumPairs(n: Int, k: Int, ar: Array[Int]): Int = ???
+    def divisibleSumPairs(k: Int, ar: List[Int]): Int = {
+        val l = for(x <- ar; y <- ar) yield (x, y)
+        (l.filter{case (x, y) => (x + y) % k == 0}.size) / 2 - 1
+    }
 
     def main(args: Array[String]) {
         val sc = new java.util.Scanner (System.in);
