@@ -1,9 +1,9 @@
 object Solution {
 
     def divisibleSumPairs(k: Int, ar: List[Int]): Int =  {
-        val pairs = for(x <- ar; y <- ar) yield (x, y)
-        val filtered = pairs.filter{case (x, y) => (x + y) % k == 0}.filter{case (x, y) => (x != y)}
-        (filtered.size) / 2
+        val pairs = for((x, i) <- ar.zipWithIndex; y <- ar.drop(i)) yield (x, y)
+        val filtered = pairs.filter{case (x, y) => (x + y) % k == 0}.filter{case (x, y) => x != y}
+        filtered.size
     }
 
     def main(args: Array[String]) {
