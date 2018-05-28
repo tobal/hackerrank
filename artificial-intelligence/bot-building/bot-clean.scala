@@ -13,6 +13,13 @@ object Solution {
         location
     }
 
+    def findDebris(board: Array[String]): List[(Int, Int)] = {
+        for {
+            (line, lineIndex) <- board.toList.zipWithIndex
+            (char, rowIndex) <- line.zipWithIndex if char == 'd'
+        } yield (lineIndex, rowIndex)
+    }
+
     def main(args: Array[String]) = {
         val pos = Console.readLine
         val board = new Array[String](5)
