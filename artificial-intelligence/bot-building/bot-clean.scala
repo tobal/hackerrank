@@ -6,8 +6,8 @@ object Solution {
     }
 
     def findBot(board: Array[String]): Option[(Int, Int)] = {
-        var location = None
-        for((line, lineIndex) <- grid.zipWithIndex) {
+        var location: Option[(Int, Int)] = None
+        for((line, lineIndex) <- board.zipWithIndex) {
             if (line.indexOf('b') != -1) location = Some(lineIndex, line.indexOf('b'))
         }
         location
