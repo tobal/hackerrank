@@ -1,10 +1,23 @@
 object Solution {
 
+    def determine(debris: (Int, Int), bot: (Int, Int)): String = {
+        val horizontalDistance = debris._1 - bot._1
+        val verticalDistance = debris._2 - bot._2
+        if(horizontalDistance == 0) {
+            if(verticalDistance < 0) "LEFT" else "RIGHT"
+        }
+        else if(verticalDistance == 0) {
+            if(horizontalDistance < 0) "UP" else "DOWN"
+        }
+        else if(verticalDistance < 0) "LEFT" else "RIGHT"
+    }
+
     def nextMove(pos: String, board: Array[String]) = {
         val botLoc = findBot(board)
         if (botLoc.isEmpty) println("CLEAN")
         else {
-            val nearest: (Int, Int) = findNearestDebris(botLoc, board)
+            val nearest: (Int, Int) = findNearestDebris(botLoc.get, board)
+            println(determine(nearest, botLoc.get))
         }
     }
 
