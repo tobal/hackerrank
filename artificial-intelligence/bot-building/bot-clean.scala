@@ -3,6 +3,9 @@ object Solution {
     def nextMove(pos: String, board: Array[String]) = {
         val botLoc = findBot(board)
         if (botLoc.isEmpty) println("CLEAN")
+        else {
+            val nearest: (Int, Int) = findNearestDebris(botLoc, board)
+        }
     }
 
     def findBot(board: Array[String]): Option[(Int, Int)] = {
@@ -12,6 +15,12 @@ object Solution {
         }
         location
     }
+
+    def findNearestDebris(bot: (Int, Int), board: Array[String]): (Int, Int) =
+        findDebris(board).minBy(distance(bot, _))
+
+    def distance(a: (Int, Int), b: (Int, Int)): Int =
+        scala.math.abs(a._1 - b._1) + scala.math.abs(a._2 - b._2)
 
     def findDebris(board: Array[String]): List[(Int, Int)] = {
         for {
