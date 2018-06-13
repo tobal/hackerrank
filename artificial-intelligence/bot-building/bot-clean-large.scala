@@ -45,8 +45,8 @@ object Solution {
     def main(args: Array[String]) = {
         val pos = Console.readLine
         val dimensions = Console.readLine.split(" ").toList.map(_.toInt)
-        val board = new Array[String](dimensions(0))
-        for (i <- 0 until dimensions(1)) {
+        val board = new Array[String](dimensions(1))
+        for (i <- 0 until dimensions(0)) {
             board.update(i, Console.readLine)
         }
         nextMove(pos, board)
