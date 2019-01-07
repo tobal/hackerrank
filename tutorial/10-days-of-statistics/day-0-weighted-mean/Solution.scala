@@ -2,7 +2,7 @@ object Solution {
 
     def calcWeightedMean(values: List[Double], weights: List[Double]): Double = {
         val weightedValues = values.zip(weights).map{ case (a, b) => a * b }
-        weightedValues.sum / weights.sum
+        BigDecimal(weightedValues.sum / weights.sum).setScale(1, BigDecimal.RoundingMode.HALF_UP).toDouble
     }
 
     def main(args: Array[String]) {
