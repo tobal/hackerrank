@@ -6,7 +6,7 @@ object Solution {
     }
 
     def main(args: Array[String]) {
-        val i = readInt
+        readInt
         val values = readLine.split(" ").toList.map(_.toDouble)
         val weights = readLine.split(" ").toList.map(_.toDouble)
         println(calcWeightedMean(values, weights))
