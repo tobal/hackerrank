@@ -5,12 +5,12 @@ object Solution {
     }
 
     def calcQuartiles(l: List[Double]): (Double, Double, Double) = {
-        val m = calcMedian(l)
+        val median = calcMedian(l)
         val (lower, upper) = l.splitAt(l.size / 2)
         val lowMed = calcMedian(lower)
         val upMed = if(lower.size == upper.size) calcMedian(upper)
             else calcMedian(upper.tail)
-        (lowMed, m, upMed)
+        (lowMed, median, upMed)
     }
 
     def main(args: Array[String]) {
