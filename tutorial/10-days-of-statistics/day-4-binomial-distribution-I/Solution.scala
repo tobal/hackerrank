@@ -16,6 +16,6 @@ object Solution {
         val l = for {
             i <- 3 until 7
         } yield binomialDistribution(i, n, p)
-        println(l)
+        println(BigDecimal(l.sum).setScale(3, BigDecimal.RoundingMode.HALF_UP).toDouble)
     }
 }
