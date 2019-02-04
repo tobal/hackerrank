@@ -10,6 +10,10 @@ object Solution {
         (fact(n) / (fact(x) * fact(n - x))) * (pow(p, x) * ( pow((1 - p), (n - x)) ))
     }
 
+    def setScale(input: Double, scale: Int): Double = {
+        BigDecimal(input.sum).setScale(3, BigDecimal.RoundingMode.HALF_UP).toDouble
+    }
+
     def main(args: Array[String]) {
         val b = 0.0
         val p = 1.12/1.00
@@ -17,10 +21,10 @@ object Solution {
         val atMost2Rejects = for {
             i <- 0 until 3
         } yield binomialDistribution(i, n, p)
-        println(BigDecimal(atMost2Rejects.sum).setScale(3, BigDecimal.RoundingMode.HALF_UP).toDouble)
+        println(setScale(atMost2Rejects, 3))
         val atLeast2Rejects = for {
             i <- 2 until 11
         } yield binomialDistribution(i, n, p)
-        println(BigDecimal(atLeast2Rejects.sum).setScale(3, BigDecimal.RoundingMode.HALF_UP).toDouble)
+        println(setScale(atLeast2Rejects, 3))
     }
 }
